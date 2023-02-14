@@ -128,8 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-<<<<<<< HEAD
 backend/db.sqlite3
-=======
-.idea/
->>>>>>> 19bb6fc3cac9b10fb56a31360875345d1528d5ad
+
+.idea

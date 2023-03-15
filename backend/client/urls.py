@@ -1,6 +1,6 @@
 from django.urls import include
 from django.urls import re_path as url, path
-from .views import UpdateProfileAPIView
+from .views import ProfileAPIView
 from rest_framework import routers
 
 
@@ -11,5 +11,5 @@ app_name = 'client'
 
 urlpatterns = [
     # url('', include(router.urls)),
-    path('update_profile/', UpdateProfileAPIView.as_view(), name='update_profile'),
+    path('profile/', ProfileAPIView.as_view(), name='update_profile'),
 ]

@@ -6,43 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { ProfileButton } from "./HeaderComponents/ProfileButton";
 
 export const Header = () => {
   return (
-    // <Navbar
-    //   collapseOnSelect
-    //   expand="lg"
-    //   bg="dark"
-    //   variant="dark"
-    //   style={{ maxHeight: "40px" }}
-    //   sticky="top"
-    // >
-    //   <Container>
-    //     <Navbar.Brand href="/home">
-    //       Aviato
-    //       {/* <img className='header-image' src = {require("./brand-aviato.svg").default}></img> */}
-    //     </Navbar.Brand>
-    //     <Nav className="me-auto">
-    //       <Nav.Link href="#features">Features</Nav.Link>
-    //       <Nav.Link href="#pricing">Pricing</Nav.Link>
-    //     </Nav>
-    //     <Nav>
-    //       <Nav.Link href="#deets">
-    //         <FontAwesomeIcon icon={faHeart} fontSize="23px" />
-    //       </Nav.Link>
-    //       <Nav.Link href="#pricing" eventKey={2}>
-    //         {
-    //           window.sessionStorage.getItem("isLogged") !== "true" ?
-    //          ( <>
-    //             <Nav.Link href="/login">Sign in</Nav.Link>
-    //             <Nav.Link href="/login">Sign up</Nav.Link>
-    //           </>) : (null)
-    //         }
-    //         <FontAwesomeIcon icon={faCircleUser} fontSize="23px" />
-    //       </Nav.Link>
-    //     </Nav>
-    //   </Container>
-    // </Navbar>
+  
 
     <AppBar className="z-app-bar" style={{ height: "40px" }}>
       <Toolbar
@@ -90,10 +58,10 @@ export const Header = () => {
             href="#deets"
             style={{ display: "inline-block", paddingRight: "10px" }}
           >
-            <FontAwesomeIcon icon={faCircleUser} fontSize="23px" />
+            <ProfileButton/>
           </Nav.Link>
           <Nav.Link
-            href="#deets"
+            
             style={{ display: "inline-block", paddingRight: "10px" }}
           >
             <FontAwesomeIcon icon={faHeart} fontSize="23px" />

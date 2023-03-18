@@ -6,17 +6,20 @@ import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleUser} from '@fortawesome/free-solid-svg-icons';
+import { logOut } from '../../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 export const ProfileButton = () => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const navigate = useNavigate();
-
+    const dispatch = useDispatch()
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 
 	const handleLogOut = () => {
+        dispatch(logOut());
 		sessionStorage.clear();
 		navigate('/login');
 	};

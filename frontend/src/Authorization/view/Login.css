@@ -1,0 +1,20 @@
+div.z-login-container {
+	display: flex !important;
+	flex-flow: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+}
+
+.z-login-title {
+	font-family: helvetica, arial, verdana, sans-serif;
+	font-size: 13px !important;
+	font-weight: 700 !important;
+	line-height: 17px !important;
+	margin-bottom: 30px !important;
+}
+.z-password-field {
+	margin-top: 20px !important;
+}
+button.z-login-btn {
+	margin-top: 40px !important;
+}

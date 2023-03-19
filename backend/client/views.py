@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 class ProfileAPIView(APIView):
 
     def get(self, request):
+        print(request.user)
         user_instance = User.objects.get(pk=request.user.id)
         try:
             queryset = Profile.objects.get(user=user_instance)

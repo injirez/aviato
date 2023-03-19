@@ -47,7 +47,7 @@ export const Header = () => {
                 <Typography>Sign in</Typography>
               </Nav.Link>
               <Nav.Link
-                href="/login"
+                href="/registration"
                 style={{ display: "inline-block", paddingRight: "40px" }}
               >
                 <Typography>Sign up</Typography>

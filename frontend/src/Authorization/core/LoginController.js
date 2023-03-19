@@ -2,11 +2,13 @@ import React from 'react'
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux'
-import { setCredentials } from '../../features/auth/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCurrentToken, setCredentials } from '../../features/auth/authSlice'
 import { useLoginMutation } from '../../features/auth/authApiSlice'
-import { Box, Button, Container, TextField } from '@mui/material'
+
+
 import "../view/Login.css"
+import { LoginView } from '../view/LoginView'
 
 const LoginController = () => {
     const userRef = useRef()
@@ -15,13 +17,14 @@ const LoginController = () => {
     const [password, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
+    const token = useSelector(selectCurrentToken)
 
     const [login, { isLoading }] = useLoginMutation()
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     userRef.current.focus()
-    // }, [])
+    useEffect(() => {
+        errRef.current.focus()
+    }, [])
 
     useEffect(() => {
         setErrMsg('')
@@ -36,6 +39,8 @@ const LoginController = () => {
             setUser('')
             setPwd('')
             navigate('/home')
+            console.log(token)
+
             window.sessionStorage.setItem("isLogged", true)
         } catch (err) {
             if (!err?.originalStatus) {
@@ -57,47 +62,10 @@ const LoginController = () => {
     const handlePwdInput = (e) => setPwd(e.target.value)
     const content = isLoading ? <h1>Loading...</h1> : (
         <section className="login">
+           
+            <LoginView handleUserInput = {handleUserInput} handleSubmit = {handleSubmit} handlePwdInput = {handlePwdInput} password = {password} username = {username}/>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-
-            <Box
-    style={{
-        overflow: 'hidden',
-        overflowY: 'hidden'
-    }}
->
-    <form onSubmit={handleSubmit}>
-        <Container className="z-login-container z-login-place">
-            <label className="z-login-title" id="LoginTitle">
-                {"Login"}
-            </label>
-            <TextField
-                id="login-field"
-                label={"Login"}
-                variant="outlined"
-                size="small"
-                onChange={handleUserInput}
-            />
-            <TextField
-                id="password-field"
-                className="z-password-field"
-                label={"Password"}
-                variant="outlined"
-                type="password"
-                size="small"
-                onChange={handlePwdInput}
-            />
-            <Button
-                className="z-login-btn"
-                disabled={!password || !username}
-                variant="contained"
-                size="small"
-                type="submit"
-            >
-                {'Submit'}
-            </Button>
-        </Container>
-    </form>
-</Box>
+         
         </section>
     )
   return content

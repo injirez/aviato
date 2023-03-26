@@ -4,10 +4,16 @@ from .serializers import ProfileSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
+
+from drf_spectacular.utils import extend_schema
 
 
 class ProfileAPIView(APIView):
 
+    @extend_schema(
+        responses={200: ProfileSerializer},
+    )
     def get(self, request):
         """
         Get user profile info
@@ -19,11 +25,18 @@ class ProfileAPIView(APIView):
             queryset = Profile.objects.get(user=user_instance)
             serializer = ProfileSerializer(queryset, many=False)
 
-            return Response({'response': serializer.data})
+            return Response({'response': serializer.data},
+                            status=status.HTTP_200_OK)
+
         except Profile.DoesNotExist:
             serializer = UserSerializer(user_instance, many=False)
-            return Response({'response': {'user': serializer.data}})
+            return Response({'response': {'user': serializer.data}},
+                            status=status.HTTP_206_PARTIAL_CONTENT)
 
+    @extend_schema(
+        request=ProfileSerializer,
+        responses={200: ProfileSerializer},
+    )
     def post(self, request):
         """
         Edit user profile
@@ -35,11 +48,14 @@ class ProfileAPIView(APIView):
         user_instance = get_object_or_404(User, pk=request.user.id)
         try:
             profile = Profile.objects.get(user=user_instance)
-            serializer = ProfileSerializer(instance=profile, data=request.data)
+            serializer = ProfileSerializer(instance=profile,
+                                           data=request.data)
             serializer.is_valid(raise_exception=True)
         except Profile.DoesNotExist:
-            serializer = ProfileSerializer(data=request.data, context={'user': user_instance})
+            serializer = ProfileSerializer(data=request.data,
+                                           context={'user': user_instance})
             serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response({'response': serializer.data})
+        return Response({'response': serializer.data},
+                        status=status.HTTP_201_CREATED)

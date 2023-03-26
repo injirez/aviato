@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LoginController from "./Authorization/core/LoginController";
 import RegistrationController from "./Authorization/core/RegistrationController";
 import { Header } from "./MainPage/Header";
@@ -11,6 +11,7 @@ export const AppRouter = () => {
     <>
       <Routes>
         <Route
+        index
           path={"/home"}
           element={
             <div className="z-global-position">
@@ -37,6 +38,7 @@ export const AppRouter = () => {
             </div>
           }
         />
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </>
   );

@@ -5,7 +5,7 @@ const baseQuery = fetchBaseQuery({
     baseUrl: 'http://127.0.0.1:8000/api/v1/',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-        const token = getState().auth.token
+        const token = window.sessionStorage.getItem('token')
         if (token) {
             headers.set("authorization", `Bearer ${token}`)
         }

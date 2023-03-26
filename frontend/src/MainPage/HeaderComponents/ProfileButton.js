@@ -8,8 +8,18 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleUser} from '@fortawesome/free-solid-svg-icons';
 import { logOut } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import { ProfileController } from '../../Authorization/core/ProfileController';
 
 export const ProfileButton = () => {
+	const [openProfile, setOpenProfile] = useState(false);
+
+	const handleClickOpenProfile = () => {
+	  setOpenProfile(true);
+	};
+  
+	const handleCloseProfile = () => {
+		setOpenProfile(false);
+	};
 	const [anchorEl, setAnchorEl] = useState(null);
 	const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -47,10 +57,12 @@ export const ProfileButton = () => {
 					'aria-labelledby': 'basic-button'
 				}}
 			>
-				<MenuItem onClick={handleClose}>Title 2</MenuItem>
+
+				{window.sessionStorage.getItem('isLogged') && <MenuItem onClick={handleClickOpenProfile}>Profile</MenuItem>}
 				<Divider />
 				<MenuItem onClick={handleLogOut}>{"Logout"}</MenuItem>
 			</Menu>
+			<ProfileController open = {openProfile} onClose = {handleCloseProfile}/>
 		</>
 	);
 };

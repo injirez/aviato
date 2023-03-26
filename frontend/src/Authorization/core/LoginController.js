@@ -35,7 +35,7 @@ const LoginController = () => {
 
         try {
             const userData = await login({ username, password }).unwrap()
-            dispatch(setCredentials({ ...userData, username }))
+            dispatch(setCredentials({ ...userData}))
             setUser('')
             setPwd('')
             navigate('/home')

@@ -36,6 +36,7 @@ class ProfileInfoSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+
 class ProfileSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):

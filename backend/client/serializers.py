@@ -15,8 +15,13 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'first_name', 'last_name', 'email', 'date_joined')
 
 
-class ProfileInfoSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=False)
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context.get('user')
+
+        return Profile.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         user_data = validated_data.get('user', False)
@@ -31,17 +36,6 @@ class ProfileInfoSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-    class Meta:
-        model = Profile
-        fields = '__all__'
-
-class ProfileSerializer(serializers.ModelSerializer):
-
-    def create(self, validated_data):
-        validated_data['user'] = self.context.get('user')
-
-        return Profile.objects.create(**validated_data)
 
     class Meta:
         model = Profile

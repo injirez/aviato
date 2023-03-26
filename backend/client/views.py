@@ -1,36 +1,61 @@
-from django.shortcuts import render
 from .models import Profile
 from django.shortcuts import get_object_or_404
-from .serializers import ProfileSerializer, ProfileInfoSerializer
-from rest_framework.viewsets import ViewSet
+from .serializers import ProfileSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+from rest_framework import status
+
+from drf_spectacular.utils import extend_schema
 
 
 class ProfileAPIView(APIView):
 
+    @extend_schema(
+        responses={200: ProfileSerializer},
+    )
     def get(self, request):
-        print(request.user)
-        user_instance = User.objects.get(pk=request.user.id)
+        """
+        Get user profile info
+        Return profile object
+        or user object if profile does not exist
+        """
+        user_instance = get_object_or_404(User, pk=request.user.id)
         try:
             queryset = Profile.objects.get(user=user_instance)
-            serializer = ProfileInfoSerializer(queryset, many=False)
+            serializer = ProfileSerializer(queryset, many=False)
 
-            return Response({'response': serializer.data})
+            return Response({'response': serializer.data},
+                            status=status.HTTP_200_OK)
+
         except Profile.DoesNotExist:
-            return Response({'response': {}})
+            serializer = UserSerializer(user_instance, many=False)
+            return Response({'response': {'user': serializer.data}},
+                            status=status.HTTP_206_PARTIAL_CONTENT)
 
-
+    @extend_schema(
+        request=ProfileSerializer,
+        responses={200: ProfileSerializer},
+    )
     def post(self, request):
-        user_instance = User.objects.get(pk=request.user.id)
+        """
+        Edit user profile
+        user.username, user.first_name,
+        user.last_name, user.email,
+        phone: +7, photo: filefield
+        Return profile object
+        """
+        user_instance = get_object_or_404(User, pk=request.user.id)
         try:
             profile = Profile.objects.get(user=user_instance)
-            serializer = ProfileInfoSerializer(instance=profile, data=request.data)
+            serializer = ProfileSerializer(instance=profile,
+                                           data=request.data)
             serializer.is_valid(raise_exception=True)
         except Profile.DoesNotExist:
-            serializer = ProfileSerializer(data=request.data, context={'user': user_instance})
+            serializer = ProfileSerializer(data=request.data,
+                                           context={'user': user_instance})
             serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response({'response': serializer.data})
+        return Response({'response': serializer.data},
+                        status=status.HTTP_201_CREATED)

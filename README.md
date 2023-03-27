@@ -1,4 +1,4 @@
-# aviator
+# aviato
 ## Start backend:
 ### Setup virtual environment:
 ```

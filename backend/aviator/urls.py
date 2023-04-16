@@ -22,4 +22,6 @@ urlpatterns = [
 
     path('api/v1/product/', include('product.urls')),
 
+    path('api/v1/advert/', include('advert.urls')),
+
 ]

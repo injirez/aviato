@@ -15,6 +15,6 @@ class GetModelsAPIView(APIView):
     def get(self, request):
         queryset = Brand.objects.all()
         serializer = BrandSerializer(queryset, many=True)
-        print(serializer.data)
+
         return Response({'response': serializer.data},
                         status=status.HTTP_200_OK)

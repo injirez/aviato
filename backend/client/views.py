@@ -35,7 +35,7 @@ class ProfileAPIView(APIView):
 
     @extend_schema(
         request=ProfileSerializer,
-        responses={200: ProfileSerializer},
+        responses={201: ProfileSerializer},
     )
     def post(self, request):
         """

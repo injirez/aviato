@@ -20,4 +20,6 @@ urlpatterns = [
 
     path('api/v1/client/', include('client.urls')),
 
+    path('api/v1/product/', include('product.urls')),
+
 ]

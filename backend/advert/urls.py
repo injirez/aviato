@@ -7,7 +7,7 @@ from rest_framework import routers
 app_name = 'advert'
 
 router = routers.DefaultRouter()
-router.register('advert', AdvertViewSet, basename='advert')
+router.register('', AdvertViewSet, basename='advert')
 
 urlpatterns = [
     url('', include(router.urls)),

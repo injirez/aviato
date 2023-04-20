@@ -15,5 +15,10 @@ class Advert(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+    # images = models.ArrrayField(
+    #     models.ImageField(upload_to='advert/media',
+    #                       null=True, blank=True),
+    #     null=True, blank=True)
+
     created_at = models.DateTimeField(verbose_name='Date created',
                                       auto_now=True)

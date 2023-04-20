@@ -18,6 +18,9 @@ class AdvertViewSet(ViewSet):
         responses={200: AdvertInfoSerializer},
     )
     def retrieve(self, request, **kwargs):
+        """
+        Retrieve single advert
+        """
         queryset = get_object_or_404(Advert, pk=kwargs.get('pk'))
         serializer = AdvertInfoSerializer(queryset)
 
@@ -28,6 +31,9 @@ class AdvertViewSet(ViewSet):
         responses={200: AdvertSerializer},
     )
     def list(self, request):
+        """
+        List of adverts
+        """
         queryset = Advert.objects.all()
         serializer = AdvertSerializer(queryset, many=True)
 
@@ -39,9 +45,13 @@ class AdvertViewSet(ViewSet):
         responses={201: AdvertInfoSerializer},
     )
     def create(self, request, **kwargs):
+        """
+        Create advert
+        """
         user_instance = get_object_or_404(Profile, user=request.user)
         # user_instance = Profile.objects.get(pk=1)
-        serializer = AdvertInfoSerializer(data=request.data, context={'user': user_instance})
+        serializer = AdvertInfoSerializer(data=request.data,
+                                          context={'user': user_instance})
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -50,5 +60,30 @@ class AdvertViewSet(ViewSet):
 
     # def update(self):
 
-    # def destroy(self):
+    def destroy(self, request, pk):
+        """
+        Deletes advert
+        """
+        object = get_object_or_404(Advert, pk=pk)
+        object.delete()
 
+        return Response({'response': 'Advert deleted'},
+                        status=status.HTTP_204_NO_CONTENT)
+
+    @extend_schema(
+        request=AdvertInfoSerializer,
+        responses={200: AdvertInfoSerializer},
+    )
+    def update(self, request, pk):
+        """
+        Updates advert
+        """
+        object = get_object_or_404(Advert, pk=pk)
+        serializer = AdvertInfoSerializer(object,
+                                          data=request.data,
+                                          partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({'response': serializer.data},
+                        status=status.HTTP_200_OK)

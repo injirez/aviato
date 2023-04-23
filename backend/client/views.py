@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
 
+from advert.models import Advert
+from advert.serializers import AdvertSerializer
+
 from drf_spectacular.utils import extend_schema
 
 
@@ -59,3 +62,42 @@ class ProfileAPIView(APIView):
 
         return Response({'response': serializer.data},
                         status=status.HTTP_201_CREATED)
+
+
+class AddFavouritesAPIView(APIView):
+    @extend_schema(
+        responses={200: 'Added to favourites'},
+    )
+    def post(self, request, pk):
+        """
+        Adds advert to favourite
+        pk
+        Return status
+        """
+        user_instance = get_object_or_404(User, pk=request.user.id)
+        profile = get_object_or_404(Profile, user=user_instance.id)
+
+        object = Advert.objects.get(pk=pk)
+        object.favourites.add(profile)
+
+        return Response({'response': 'Added to favourites'},
+                        status=status.HTTP_200_OK)
+
+
+class GetFavouritesAPIView(APIView):
+    @extend_schema(
+        responses={200: AdvertSerializer},
+    )
+    def get(self, request):
+        """
+        Get all favourites
+        Return advert objects
+        """
+        user_instance = get_object_or_404(User, pk=request.user.id)
+        profile = get_object_or_404(Profile, user=user_instance.id)
+
+        favourites = profile.adverts.all()
+        serializer = AdvertSerializer(favourites, many=True)
+
+        return Response({'response': serializer.data},
+                        status=status.HTTP_200_OK)

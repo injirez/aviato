@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
+from django.http import FileResponse
 from rest_framework.views import APIView
 from rest_framework import status
 from django.shortcuts import get_object_or_404
@@ -81,6 +82,7 @@ class AdvertViewSet(ViewSet):
         object = get_object_or_404(Advert, pk=pk)
         serializer = AdvertInfoSerializer(object,
                                           data=request.data,
+                                          context={'images': request.data.get('images')},
                                           partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()

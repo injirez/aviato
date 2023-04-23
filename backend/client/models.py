@@ -8,4 +8,3 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     phone = PhoneNumberField(region='RU', unique=True, null=True, verbose_name='phone number')
     photo = models.ImageField(upload_to='client/media', null=True, verbose_name='profile photo')
-    # favorites = SaleAD

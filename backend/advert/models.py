@@ -1,6 +1,11 @@
 from django.db import models
 from client.models import Profile
 from product.models import Product
+from django.contrib.postgres.fields import ArrayField
+
+
+class Images(models.Model):
+    image = models.ImageField(upload_to='advert/media', null=True, blank=True)
 
 
 class Advert(models.Model):
@@ -15,10 +20,13 @@ class Advert(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-    # images = models.ArrrayField(
+    # images = ArrayField(
     #     models.ImageField(upload_to='advert/media',
     #                       null=True, blank=True),
     #     null=True, blank=True)
+    images = models.ManyToManyField(Images)
+
+    favourites = models.ManyToManyField(Profile, related_name='adverts')
 
     created_at = models.DateTimeField(verbose_name='Date created',
                                       auto_now=True)

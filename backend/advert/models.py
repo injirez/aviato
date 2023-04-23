@@ -26,7 +26,7 @@ class Advert(models.Model):
     #     null=True, blank=True)
     images = models.ManyToManyField(Images)
 
-    favourites = models.ManyToManyField(Profile, related_name='adverts')
+    favourites = models.ManyToManyField(Profile, related_name='adverts', null=True, blank=True)
 
     created_at = models.DateTimeField(verbose_name='Date created',
                                       auto_now=True)

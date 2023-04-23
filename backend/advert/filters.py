@@ -11,6 +11,12 @@ class AdvertFilter(filters.FilterSet):
     product_model = filters.CharFilter(field_name='product__model')
     product_release_date = filters.IsoDateTimeFromToRangeFilter(field_name='product__release_date')
     product_power = filters.RangeFilter(field_name='product__power')
+    ordering = filters.OrderingFilter(
+        fields=(
+            ('price', 'price'),
+            ('created_at', 'date')
+        )
+    )
 
     class Meta:
         model = Advert

@@ -1,4 +1,4 @@
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django.http import FileResponse
 from rest_framework.views import APIView
@@ -11,10 +11,32 @@ from client.models import Profile
 from .models import Advert
 from .serializers import AdvertSerializer, AdvertInfoSerializer
 
+from django_filters import rest_framework as filters
+from .filters import AdvertFilter
+
 from drf_spectacular.utils import extend_schema
 
 
-class AdvertViewSet(ViewSet):
+class AdvertViewSet(ModelViewSet):
+    queryset = Advert.objects.all()
+    serializer_class = AdvertSerializer
+
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = AdvertFilter
+
+    @extend_schema(
+        responses={200: AdvertSerializer},
+    )
+    def list(self, request):
+        """
+        List of adverts
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.serializer_class(queryset, many=True)
+
+        return Response({'response': serializer.data},
+                        status=status.HTTP_200_OK)
+
     @extend_schema(
         responses={200: AdvertInfoSerializer},
     )
@@ -24,19 +46,6 @@ class AdvertViewSet(ViewSet):
         """
         queryset = get_object_or_404(Advert, pk=kwargs.get('pk'))
         serializer = AdvertInfoSerializer(queryset)
-
-        return Response({'response': serializer.data},
-                        status=status.HTTP_200_OK)
-
-    @extend_schema(
-        responses={200: AdvertSerializer},
-    )
-    def list(self, request):
-        """
-        List of adverts
-        """
-        queryset = Advert.objects.all()
-        serializer = AdvertSerializer(queryset, many=True)
 
         return Response({'response': serializer.data},
                         status=status.HTTP_200_OK)

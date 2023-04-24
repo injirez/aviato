@@ -3,7 +3,6 @@ from .models import Advert
 
 
 class AdvertFilter(filters.FilterSet):
-    print(1)
     name = filters.CharFilter(lookup_expr='icontains', field_name='name')
     price = filters.RangeFilter()
     product_type = filters.CharFilter(field_name='product__type')

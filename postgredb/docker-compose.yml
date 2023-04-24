@@ -1,0 +1,17 @@
+version: "3.9"
+
+networks:
+  aviato-network:
+    external: true
+
+services:
+  postgres:
+    image: postgres:15.1
+    environment:
+      POSTGRES_DB: aviatodb
+      POSTGRES_USER: aviato
+      POSTGRES_PASSWORD: aviato
+    ports:
+      - 5432:5432
+    networks:
+      - aviato-network

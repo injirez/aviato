@@ -31,7 +31,10 @@ class AdvertViewSet(ModelViewSet):
         """
         List of adverts
         """
-        user_instance = get_object_or_404(Profile, user=request.user)
+        try:
+            user_instance = get_object_or_404(Profile, user=request.user)
+        except TypeError:
+            user_instance = False
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.serializer_class(queryset, many=True,
                                            context={'user': user_instance})

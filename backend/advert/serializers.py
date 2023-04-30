@@ -65,7 +65,11 @@ class AdvertSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     seller = ProfileSerializer(required=False)
     images = ImageSerializer(many=True)
+    favourite = serializers.SerializerMethodField('is_favourite')
+
+    def is_favourite(self, advert):
+        return advert.seller == self.context.get('user')
 
     class Meta:
         model = Advert
-        fields = ('id', 'name', 'price', 'product', 'seller', 'images')
+        fields = ('id', 'name', 'price', 'product', 'seller', 'images', 'favourite')

@@ -10,6 +10,7 @@ class AdvertFilter(filters.FilterSet):
     product_model = filters.CharFilter(field_name='product__model')
     product_release_date = filters.IsoDateTimeFromToRangeFilter(field_name='product__release_date')
     product_power = filters.RangeFilter(field_name='product__power')
+    seller_username = filters.CharFilter(field_name='seller__user__username')
     ordering = filters.OrderingFilter(
         fields=(
             ('price', 'price'),
@@ -21,4 +22,5 @@ class AdvertFilter(filters.FilterSet):
         model = Advert
         fields = ('name', 'price', 'product_type',
                   'product_brand', 'product_model',
-                  'product_release_date', 'product_power')
+                  'product_release_date', 'product_power',
+                  'seller_username')

@@ -8,12 +8,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleUser} from '@fortawesome/free-solid-svg-icons';
 import { logOut } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
-import { ProfileController } from '../../Authorization/core/ProfileController';
+import { ProfileController } from '../../Profile/ProfileController';
+import { useGetProfileQuery } from '../../features/profile/profileGetApiSlice';
 
 export const ProfileButton = () => {
+	const { data: users, refetch } = useGetProfileQuery();
 	const [openProfile, setOpenProfile] = useState(false);
 
-	const handleClickOpenProfile = () => {
+	const handleClickOpenProfile = async () => {
+		await refetch();
 	  setOpenProfile(true);
 	};
   
@@ -62,7 +65,7 @@ export const ProfileButton = () => {
 				<Divider />
 				<MenuItem onClick={handleLogOut}>{"Logout"}</MenuItem>
 			</Menu>
-			<ProfileController open = {openProfile} onClose = {handleCloseProfile}/>
+			<ProfileController open = {openProfile} onClose = {handleCloseProfile} users = {users}/>
 		</>
 	);
 };

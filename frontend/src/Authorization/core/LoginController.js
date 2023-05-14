@@ -42,6 +42,7 @@ const LoginController = () => {
             console.log(token)
 
             window.sessionStorage.setItem("isLogged", true)
+            window.sessionStorage.setItem("user", username)
         } catch (err) {
             if (!err?.originalStatus) {
                 // isLoading: true until timeout occurs

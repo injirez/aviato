@@ -1,10 +1,9 @@
 import React from 'react'
 import { Button, Form } from "react-bootstrap";
 
-export const SearchBar = () => {
+export const SearchBar = ({handleSearch, searchValue}) => {
   return (
     <div className="main-searchbar">
-       
         <Form className="d-flex">
         <img className='header-image' src = {require("./brand-aviato.svg").default}></img>
           <Form.Control
@@ -12,8 +11,9 @@ export const SearchBar = () => {
             type="search"
             placeholder="Search"
             aria-label="Search"
+            value={searchValue}
+            onChange={handleSearch}
           />
-          <Button  style={{maxHeight: "40px", marginTop: "30px"}} variant="outline-success">Search</Button>
         </Form>
       </div>
   )

@@ -1,17 +1,23 @@
-import React from "react";
-import Container from "react-bootstrap/Container";
+import React, { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ProfileButton } from "./HeaderComponents/ProfileButton";
+import { AddOfferButton } from "./HeaderComponents/AddOfferButton";
+import { MyOffers } from "./HeaderComponents/MyOffers";
 
 export const Header = () => {
+  const [open, setOpen] =  useState(false)
+  const handleOpen = () => {
+      setOpen(true)
+  }
+  const handleClose = () => {
+      setOpen(false)
+  }
   return (
-  
-
     <AppBar className="z-app-bar" style={{ height: "40px" }}>
       <Toolbar
         style={{
@@ -53,15 +59,22 @@ export const Header = () => {
                 <Typography>Sign up</Typography>
               </Nav.Link>
             </>
-          ) : null}
+          ) : <Nav.Link
+          style={{ display: "inline-block", paddingRight: "10px" }}
+        >
+          <MyOffers open = {open} onClose = {handleClose} onOpen = {handleOpen}/>
+        </Nav.Link>}
+           <Nav.Link
+            style={{ display: "inline-block"}}
+          >
+            <AddOfferButton/>
+          </Nav.Link>
           <Nav.Link
-            href="#deets"
             style={{ display: "inline-block", paddingRight: "10px" }}
           >
             <ProfileButton/>
           </Nav.Link>
           <Nav.Link
-            
             style={{ display: "inline-block", paddingRight: "10px" }}
           >
             <FontAwesomeIcon icon={faHeart} fontSize="23px" />

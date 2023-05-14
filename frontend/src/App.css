@@ -26,3 +26,18 @@ height: 100px;
 	font-size: 32px !important;
 	line-height: 32px !important;
 }
+.container_offer {
+	display: grid; 
+	grid-template-columns: 0.5fr 1.6fr 0.9fr; 
+	grid-template-rows: 0.2fr 1.2fr 1.6fr; 
+	gap: 0px 0px; 
+	grid-template-areas: 
+	  "Name Name Name"
+	  "Toolbar Image Contacts"
+	  ". Stats ."; 
+  }
+  .Name { grid-area: Name; }
+  .Image { grid-area: Image; }
+  .Toolbar { grid-area: Toolbar; }
+  .Contacts { grid-area: Contacts; }
+  .Stats { grid-area: Stats; }

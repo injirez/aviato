@@ -1,32 +1,34 @@
 import { Box, Button, Grid, TextField} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useGetProfileQuery } from "../../features/profile/profileGetApiSlice";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useAddProfileMutation } from "../../features/profile/profileAddApiSlice";
+import { useAddProfileMutation } from "../features/profile/profileAddApiSlice";
 
-export const ProfileController = ({ open, onClose }) => {
-  const { data: users } = useGetProfileQuery(open);
+
+export const ProfileController = ({ open, onClose, users }) => {
   const [addProfile] = useAddProfileMutation();
-
   const [phoneNumber, setPhone] = useState("");
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [isRender, setIsRender] = useState(false);
   useEffect(() => {
+   if(open && users)
+   {
     setFirstName(users?.response.user?.first_name);
     setLastName(users?.response.user?.last_name);
     setEmail(users?.response.user?.email);
     setUserName(users?.response.user?.username);
     setPhone(users?.response.phone);
+    setIsRender(true);
+    }
   }, [open]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const phone = phoneNumber;
       let user = {
@@ -35,6 +37,12 @@ export const ProfileController = ({ open, onClose }) => {
         first_name: firstName,
       };
       addProfile({ phone, user });
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setUserName("");
+      setPhone("");
+      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -43,12 +51,10 @@ export const ProfileController = ({ open, onClose }) => {
     <Dialog
       open={open}
       onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Profile"}</DialogTitle>
+      <DialogTitle>{"Profile"}</DialogTitle>
       <form onSubmit={handleSubmit}>
-        <DialogContent>
+       { isRender ? <DialogContent>
           <Box>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -67,7 +73,7 @@ export const ProfileController = ({ open, onClose }) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Last NAme"
+                  label="Last Name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 ></TextField>
@@ -88,9 +94,9 @@ export const ProfileController = ({ open, onClose }) => {
               </Grid>
             </Grid>
           </Box>
-        </DialogContent>
+        </DialogContent> : null}
         <DialogActions>
-          <Button onClick={onClose} type="submit">Save</Button>
+          <Button onClick={handleSubmit} type="submit">Save</Button>
           <Button onClick={onClose} autoFocus>
             Close
           </Button>

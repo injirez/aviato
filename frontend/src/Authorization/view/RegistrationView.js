@@ -16,7 +16,7 @@ export const RegistrationView = ({handleUserInput, handleSubmit, handlePwdInput,
             </label>
             <TextField
                 id="login-field"
-                label={"Registration"}
+                label={"Username"}
                 variant="outlined"
                 size="small"
                 onChange={handleUserInput}

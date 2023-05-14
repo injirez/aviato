@@ -16,7 +16,7 @@ export const LoginView = ({handleUserInput, handleSubmit, handlePwdInput, passwo
             </label>
             <TextField
                 id="login-field"
-                label={"Login"}
+                label={"Username"}
                 variant="outlined"
                 size="small"
                 onChange={handleUserInput}

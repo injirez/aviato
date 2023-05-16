@@ -5,7 +5,15 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Images(models.Model):
-    image = models.ImageField(upload_to='advert/media', null=True, blank=True)
+    image = models.ImageField(upload_to='advert/media',
+                              null=True, blank=True)
+
+
+class Location(models.Model):
+    country = models.CharField(verbose_name='Country',
+                               max_length=100)
+    city = models.CharField(verbose_name='City',
+                            max_length=100)
 
 
 class Advert(models.Model):
@@ -26,7 +34,10 @@ class Advert(models.Model):
     #     null=True, blank=True)
     images = models.ManyToManyField(Images)
 
-    favourites = models.ManyToManyField(Profile, related_name='adverts', null=True, blank=True)
+    favourites = models.ManyToManyField(Profile, related_name='adverts',
+                                        null=True, blank=True)
+
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(verbose_name='Date created',
                                       auto_now=True)

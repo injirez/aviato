@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Advert, Images
+from .models import Advert, Images, Location
 from product.models import Product
 from client.serializers import ProfileSerializer
 
@@ -16,15 +16,24 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = '__all__'
+
+
 class AdvertInfoSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     seller = ProfileSerializer(required=False)
     images = ImageSerializer(many=True, required=False)
+    location = LocationSerializer()
 
     def create(self, validated_data):
         validated_data['seller'] = self.context.get('user')
         product = Product.objects.create(**validated_data.get('product'))
         validated_data['product'] = product
+        location = Location.objects.create(**validated_data.get('location'))
+        validated_data['location'] = location
 
         return Advert.objects.create(**validated_data)
 
@@ -54,6 +63,13 @@ class AdvertInfoSerializer(serializers.ModelSerializer):
                 image = Images.objects.create(image=images_data)
                 instance.images.add(image)
 
+        location_data = validated_data.pop('location', False)
+        if location_data:
+            location = instance.location
+            location.country = product_data.pop('country', location.country)
+            location.city = product_data.pop('city', location.city)
+            location.save()
+
         return instance
 
     class Meta:
@@ -66,10 +82,12 @@ class AdvertSerializer(serializers.ModelSerializer):
     seller = ProfileSerializer(required=False)
     images = ImageSerializer(many=True)
     favourite = serializers.SerializerMethodField('is_favourite')
+    location = LocationSerializer()
 
     def is_favourite(self, advert):
         return advert.seller == self.context.get('user')
 
     class Meta:
         model = Advert
-        fields = ('id', 'name', 'price', 'product', 'seller', 'images', 'favourite')
+        fields = ('id', 'name', 'price', 'product', 'seller',
+                  'images', 'favourite', 'location')

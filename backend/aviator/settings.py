@@ -106,8 +106,8 @@ DATABASES = {
 
         'PASSWORD': 'aviato',
 
-        # 'HOST': '172.20.0.2',
-        'HOST': '127.0.0.1',
+        'HOST': 'postgres',
+        # 'HOST': '127.0.0.1',
 
         'PORT': '5432',
 

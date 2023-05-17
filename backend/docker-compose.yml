@@ -1,10 +1,15 @@
-version: '3.8'
-
-networks:
-  aviato-network:
-    external: true
+version: '3'
 
 services:
+  postgres:
+    image: postgres:15.1
+    environment:
+      POSTGRES_DB: aviatodb
+      POSTGRES_USER: aviato
+      POSTGRES_PASSWORD: aviato
+    ports:
+      - 5432:5432
+
   aviato_backend:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -12,5 +17,3 @@ services:
       - .:/opt/aviato/backend
     ports:
       - 8000:8000
-    networks:
-      - aviato-network

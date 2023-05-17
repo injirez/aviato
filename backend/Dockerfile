@@ -1,14 +1,21 @@
-# pull official base image
+# Используем офифциальный образ python
 FROM python:3.11.3-alpine
-# set work directory
+
+# Создаем рабочую директорию в контейнере
 WORKDIR /opt/aviato/backend
-# set environment variables
+
+# Создаем переменные
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-# install dependencies
-RUN pip install --upgrade pip
+
+# Копируем файл с зависимостями ииверсиями
 COPY ./requirements.txt .
+
+# Устанавливаем пакет pip
+RUN pip install --upgrade pip
+
+# Устанавливаем все необходимые зависимости
 RUN pip install -r requirements.txt
-# copy project
-# COPY . .
+
+# Добавляем Django приложение
 ADD . /opt/aviato/backend

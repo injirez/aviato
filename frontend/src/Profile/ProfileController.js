@@ -52,28 +52,28 @@ export const ProfileController = ({ open, onClose, users }) => {
       open={open}
       onClose={onClose}
     >
-      <DialogTitle>{"Profile"}</DialogTitle>
+      <DialogTitle>{"Профиль"}</DialogTitle>
       <form onSubmit={handleSubmit}>
        { isRender ? <DialogContent>
           <Box>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Phone"
+                  label="Телефон"
                   value={phoneNumber}
                   onChange={(e) => setPhone(e.target.value)}
                 ></TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="First Name"
+                  label="Имя"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 ></TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Last Name"
+                  label="Фамилия"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 ></TextField>
@@ -87,7 +87,7 @@ export const ProfileController = ({ open, onClose, users }) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="User Name"
+                  label="Имя пользователя"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
                 ></TextField>
@@ -96,9 +96,9 @@ export const ProfileController = ({ open, onClose, users }) => {
           </Box>
         </DialogContent> : null}
         <DialogActions>
-          <Button onClick={handleSubmit} type="submit">Save</Button>
+          <Button onClick={handleSubmit} type="submit">Сохранить</Button>
           <Button onClick={onClose} autoFocus>
-            Close
+            Закрыть
           </Button>
         </DialogActions>
       </form>

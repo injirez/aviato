@@ -60,7 +60,7 @@ export const ListOfOffers = ({adverts, myOffers, fetchData}) => {
     <><Container>
       <Row xs={"1"} sm={"2"} md={"3"} lg={"4"}>
         {Object.values(adverts).map((item) => (
-          <Col key={item.id}>
+          <Col key={item.id} style = {{paddingTop: '10px'}}>
             <Card>
               {myOffers && <Box flexDirection={'row'} paddingLeft={'10px'}>
                 <IconButton sx={{ width: '20px', height: '20px' }} onClick={() => handleClickOpenProfile(item.id)}><EditIcon sx={{ width: '20px', height: '20px' }} /></IconButton>

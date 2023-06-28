@@ -58,6 +58,24 @@ export const Filter = ({handlePriceMin, handlePriceMax, priceMin, priceMax, prod
           <MenuItem value={'plane'}>Plane</MenuItem>
         </Select>
         </Box>
+        <Box display="flex" alignItems="center" flexDirection={'column'}>
+        <Typography>Местоположение</Typography>
+        <Box display="flex" alignItems="center" >
+        <Select
+              label = {'Type'}
+              sx={{width:'200px'}}
+              variant='standard'
+              value={productType}
+              onChange={(e) => setProductType(e.target.value)}
+        >
+          <MenuItem value={''}>По умолчанию</MenuItem>
+          <MenuItem value={'helicopter'}>Helicopter</MenuItem>
+          <MenuItem value={'glider'}>Hlider</MenuItem>
+          <MenuItem value={'parts'}>Parts</MenuItem>
+          <MenuItem value={'plane'}>Plane</MenuItem>
+        </Select>
+      </Box>
+    </Box>
       <Box display="flex" alignItems="center" flexDirection={'column'}>
         <Typography>Выберите цену</Typography>
         <Box display="flex" alignItems="center" >

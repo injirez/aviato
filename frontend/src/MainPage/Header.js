@@ -50,13 +50,13 @@ export const Header = () => {
                 href="/login"
                 style={{ display: "inline-block", paddingRight: "10px" }}
               >
-                <Typography>Sign in</Typography>
+                <Typography>Авторизация</Typography>
               </Nav.Link>
               <Nav.Link
                 href="/registration"
                 style={{ display: "inline-block", paddingRight: "40px" }}
               >
-                <Typography>Sign up</Typography>
+                <Typography>Регистрация</Typography>
               </Nav.Link>
             </>
           ) : <Nav.Link

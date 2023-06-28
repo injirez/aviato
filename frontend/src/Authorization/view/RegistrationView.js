@@ -12,11 +12,11 @@ export const RegistrationView = ({handleUserInput, handleSubmit, handlePwdInput,
     <form onSubmit={handleSubmit}>
         <Container className="z-login-container z-login-place">
             <label className="z-login-title" id="LoginTitle">
-                {"Registration"}
+                {"Регистрация"}
             </label>
             <TextField
                 id="login-field"
-                label={"Username"}
+                label={"Имя пользователя"}
                 variant="outlined"
                 size="small"
                 onChange={handleUserInput}
@@ -24,7 +24,7 @@ export const RegistrationView = ({handleUserInput, handleSubmit, handlePwdInput,
             <TextField
                 id="password-field"
                 className="z-password-field"
-                label={"Password"}
+                label={"Пароль"}
                 variant="outlined"
                 type="password"
                 size="small"
@@ -37,7 +37,7 @@ export const RegistrationView = ({handleUserInput, handleSubmit, handlePwdInput,
                 size="small"
                 type="submit"
             >
-                {'Submit'}
+                {'Подтвердить'}
             </Button>
         </Container>
     </form>

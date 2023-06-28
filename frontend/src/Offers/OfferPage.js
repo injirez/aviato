@@ -11,7 +11,6 @@ const ProductImage = styled('img')({
 
 export const OfferPage = () => {
     const { offer, isLoading, error } = useSelector((state) => state.offer);
-    console.log({offer})
     const offerParams = offer.response;
   return (
   <Box className="container_offer">

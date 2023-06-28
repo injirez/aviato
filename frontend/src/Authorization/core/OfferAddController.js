@@ -171,7 +171,7 @@ const [uploadedImages, setUploadedImages] = useState([]);
               </Grid>
              <Grid item xs={12} sm={12}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker sx={{width:'223px'}} label="Release Date"
+            <DatePicker sx={{width:'223px'}} label="Release Date"
                   value={releaseDate}
                   format="YYYY-MM-DD"
                   onChange={(newValue) => setReleaseDate(newValue)}

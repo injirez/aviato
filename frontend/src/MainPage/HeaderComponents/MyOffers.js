@@ -4,7 +4,6 @@ import { ListOfOffers } from '../ListOfOffers'
 
 export const MyOffers = ({open, onClose, onOpen}) => {
   const [adverts, setAdverts] = useState([]);
-  
   async function fetchData() {
     const response = await fetch("http://127.0.0.1:8000/api/v1/advert/");
     const data = await response.json();
@@ -17,8 +16,7 @@ export const MyOffers = ({open, onClose, onOpen}) => {
   }
   return (
     <>
-    <Link component="button"
-  variant="body2" onClick={handleOnOpenMyOffers}>My offers</Link>
+    <Link component="button" variant="body2" onClick={handleOnOpenMyOffers}>Мои объявления</Link>
     <Dialog
           open={open}
           onClose={onClose}
@@ -43,6 +41,7 @@ export const MyOffers = ({open, onClose, onOpen}) => {
                   Close
               </Button>
           </DialogActions>
-      </Dialog></>
+      </Dialog>
+   </>
   )
 }

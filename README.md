@@ -12,3 +12,8 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver <optional address> # default 127.0.0.1:8000
 ```
+### Start frontend:
+```
+npm install
+npm start
+```
